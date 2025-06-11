@@ -1,28 +1,22 @@
 const express = require('express');
-const path = require('path');
+const cors = require('cors');
+
 const app = express();
+
+// ✅ This line is CRITICAL
 const PORT = process.env.PORT || 3000;
 
-const cors = require('cors');
 app.use(cors());
 app.use(express.json());
 
-
-// Serve static files from the 'public' folder
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Optional: handle root URL to send index.html
+// Sample route
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.send('Hello from the server!');
 });
 
-app.use((err, req, res, next) => {
-  console.error('Unhandled error:', err.stack || err);
-  res.status(500).json({ error: 'Internal Server Error' });
-});
-
+// ✅ This part is what Render looks for
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
 
 
